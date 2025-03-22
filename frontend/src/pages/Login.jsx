@@ -20,7 +20,7 @@ const Login = () => {
       setCredentials(prev => ({ ...prev, [e.target.id]: e.target.value }))
    }
 
-<<<<<<< HEAD
+
    const handleClick = async (e) => {
      e.preventDefault();
 
@@ -55,37 +55,36 @@ const Login = () => {
      }
    };
 
-=======
-   const handleClick = async e => {
-      e.preventDefault()
+   // const handleClick = async e => {
+   //    e.preventDefault()
 
-      dispatch({type:'LOGIN_START'})
+   //    dispatch({type:'LOGIN_START'})
 
-      try {
-         const res = await fetch(`${BASE_URL}/auth/login`, {
-            method:'post',
-            headers: {
-               'content-type':'application/json'
-            },
-            credentials:'include',
-            body: JSON.stringify(credentials)
-         })
+   //    try {
+   //       const res = await fetch(`${BASE_URL}/auth/login`, {
+   //          method:'post',
+   //          headers: {
+   //             'content-type':'application/json'
+   //          },
+   //          credentials:'include',
+   //          body: JSON.stringify(credentials)
+   //       })
 
-         console.log('====================================');
-         console.log(res);
-         console.log('====================================');
+   //       console.log('====================================');
+   //       console.log(res);
+   //       console.log('====================================');
 
-         const result = await res.json()
-         if(!res.ok) alert(result.message)
-         console.log(result.data)
+   //       const result = await res.json()
+   //       if(!res.ok) alert(result.message)
+   //       console.log(result.data)
 
-         dispatch({type:"LOGIN_SUCCESS", payload:result.data})
-         navigate('/')
-      } catch(err) {
-         dispatch({type:"LOGIN_FAILURE", payload:err.message})
-      }
-   }
->>>>>>> 485b414cb290e351f8e3bc5a223336378823ae6d
+   //       dispatch({type:"LOGIN_SUCCESS", payload:result.data})
+   //       navigate('/')
+   //    } catch(err) {
+   //       dispatch({type:"LOGIN_FAILURE", payload:err.message})
+   //    }
+   // }
+
 
    return (
       <section>

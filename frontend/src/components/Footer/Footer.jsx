@@ -3,10 +3,8 @@ import "./footer.css";
 import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-<<<<<<< HEAD
 import Logo from "../../assets/images/logo1.png";
-=======
->>>>>>> 485b414cb290e351f8e3bc5a223336378823ae6d
+
 
 const quick__links = [
   {
@@ -47,11 +45,11 @@ const Footer = () => {
         <Row>
           <Col lg="3">
             <div className="logo">
-<<<<<<< HEAD
+
               <img src={Logo} alt="" />
-=======
+
               <img src={logo} alt="" />
->>>>>>> 485b414cb290e351f8e3bc5a223336378823ae6d
+
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Commodi, enim.

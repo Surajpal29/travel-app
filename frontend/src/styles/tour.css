@@ -16,7 +16,7 @@
 .active__page {
    background: var(--secondary-color);
    color     : #fff !important;
-<<<<<<< HEAD
+
 }
 
 .display-align-items{
@@ -51,6 +51,5 @@
 .isActive{
    background-color: var(--secondary-color) !important;
    color: #fff !important;
-=======
->>>>>>> 485b414cb290e351f8e3bc5a223336378823ae6d
+
 }
