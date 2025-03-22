@@ -2,6 +2,8 @@ import express  from "express";
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import { fileURLToPath } from 'url'
+import path from 'path';
 import cookieParser from "cookie-parser";
 import tourRoute from './routes/tours.js'
 import userRoute from './routes/users.js'
@@ -39,6 +41,15 @@ app.use("/tours", tourRoute)
 app.use("/users", userRoute)
 app.use("/review", reviewRoute)
 app.use("/booking", bookingRoute)
+
+// ✅ Frontend ko serve karna:
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
 
 app.listen(port, () => {
    connect()

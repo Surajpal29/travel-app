@@ -1,12 +1,8 @@
-<<<<<<< HEAD
+
 import mongoose from 'mongoose'
 import Booking from './../models/Booking.js'
 
-=======
-import Booking from './../models/Booking.js'
 
-
->>>>>>> 485b414cb290e351f8e3bc5a223336378823ae6d
 // create new booking
 export const createBooking = async(req,res) => {
    const newBooking = new Booking(req.body)
@@ -21,7 +17,7 @@ export const createBooking = async(req,res) => {
 }
 
 // get single booking
-<<<<<<< HEAD
+
 
 export const getBooking = async (req, res) => {
   const { id } = req.params;  // Ye userId hoga
@@ -53,19 +49,19 @@ export const getBooking = async (req, res) => {
   }
 };
 
-=======
-export const getBooking = async(req,res) => {
-   const id = req.params.id
-   
-   try {
-      const book = await Booking.findById(id)
 
-      res.status(200).json({success:true, message:"Successful!", data:book})
-   } catch (error) {
-      res.status(404).json({success:true, message:"Not Found!"})
-   }
-} 
->>>>>>> 485b414cb290e351f8e3bc5a223336378823ae6d
+// export const getBooking = async(req,res) => {
+//    const id = req.params.id
+   
+//    try {
+//       const book = await Booking.findById(id)
+
+//       res.status(200).json({success:true, message:"Successful!", data:book})
+//    } catch (error) {
+//       res.status(404).json({success:true, message:"Not Found!"})
+//    }
+// } 
+
 
 
 // get all booking
@@ -78,7 +74,7 @@ export const getAllBooking = async(req,res) => {
    } catch (error) {
       res.status(500).json({success:true, message:"Internal server error!"})
    }
-<<<<<<< HEAD
+
 } 
 
 
@@ -94,6 +90,3 @@ export const deleteBooking= async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
-=======
-} 
->>>>>>> 485b414cb290e351f8e3bc5a223336378823ae6d
