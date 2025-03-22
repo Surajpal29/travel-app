@@ -147,7 +147,11 @@ const TourDetails = () => {
                   </Col>
 
                   <Col lg='4'>
+<<<<<<< HEAD
                         <Booking tour={tour} avgRating={avgRating} />
+=======
+                     <Booking tour={tour} avgRating={avgRating} />
+>>>>>>> 485b414cb290e351f8e3bc5a223336378823ae6d
                   </Col>
                </Row>
             }
