@@ -1,0 +1,34 @@
+.booking__card {
+    margin: 1rem 0;
+}
+
+.booking__card .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+
+.booking__card .card:hover {
+    transform: translateY(-5px);
+}
+
+.booking__details p {
+    margin-bottom: 0.4rem;
+    font-size: 15px;
+}
+
+.tour__title {
+    font-weight: 600;
+    font-size: 20px;
+    color: #333;
+}
+
+.btn_container{
+    display: flex;
+    align-items: end;
+    justify-content: end;
+}
+
+.cencal_booking__btn{
+    background-color: red!important;
+}

@@ -1,0 +1,3 @@
+node_modules
+*.exe
+frontend/src/assets/images/dotnet-sdk-8.0.407-win-x64.exe
