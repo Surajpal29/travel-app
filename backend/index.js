@@ -10,6 +10,7 @@ import userRoute from './routes/users.js'
 import authRoute from './routes/auth.js'
 import reviewRoute from './routes/reviews.js'
 import bookingRoute from './routes/bookings.js'
+import { log } from "console";
 
 dotenv.config()
 const app = express()
@@ -22,6 +23,9 @@ const corsOptions = {
 mongoose.set("strictQuery", false)
 const connect = async() => {
    try {
+      console.log('====================================');
+      console.log(process.env.MONGO_URI);
+      console.log('====================================');
       await mongoose.connect(process.env.MONGO_URI, {
          useNewUrlParser: true,
          useUnifiedTopology: true
