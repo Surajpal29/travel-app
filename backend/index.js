@@ -11,6 +11,7 @@ import authRoute from './routes/auth.js'
 import reviewRoute from './routes/reviews.js'
 import bookingRoute from './routes/bookings.js'
 import { log } from "console";
+import apiRouter from "./routes/api.js"
 
 dotenv.config()
 const app = express()
@@ -45,6 +46,7 @@ app.use("/tours", tourRoute)
 app.use("/users", userRoute)
 app.use("/review", reviewRoute)
 app.use("/booking", bookingRoute)
+app.use("/api",apiRouter)
 
 // ✅ Frontend ko serve karna:
 const __filename = fileURLToPath(import.meta.url);

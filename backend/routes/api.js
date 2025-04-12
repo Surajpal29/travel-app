@@ -1,5 +1,5 @@
 import express from 'express'
-import { ApiDialogFlowWebHook } from '../Controllers/apiController';
+import {ApiDialogFlowWebHook } from '../Controllers/apiController.js';
 
 
 const router = express.Router();

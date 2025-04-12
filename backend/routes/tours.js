@@ -2,6 +2,7 @@ import express from 'express'
 import { createTour, deleteTour, getAllTour, getFeaturedTour, getSingleTour, getTourBySearch, getTourCount, updateTour } from '../Controllers/tourControllers.js'
 
 import { verifyAdmin } from '../utils/verifyToken.js'
+import { recomandationController } from '../Controllers/recomandationController.js'
 
 const router = express.Router()
 
@@ -24,6 +25,7 @@ router.get('/', getAllTour)
 router.get("/search/getTourBySearch", getTourBySearch)
 router.get("/search/getFeaturedTour", getFeaturedTour)
 router.get("/search/getTourCount", getTourCount)
+router.post("/recommend",recomandationController)
 
 
 

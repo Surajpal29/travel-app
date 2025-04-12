@@ -37,7 +37,7 @@ const quick__links2 = [
 ];
 
 const Footer = () => {
-  const year = new Date().getFullYear();
+  // const year = new Date().getFullYear();
 
   return (
     <footer className="footer">
@@ -45,7 +45,6 @@ const Footer = () => {
         <Row>
           <Col lg="3">
             <div className="logo">
-
               <img src={Logo} alt="" />
 
               <img src={logo} alt="" />
@@ -104,7 +103,7 @@ const Footer = () => {
           <Col lg="3">
             <h5 className="footer__link-title">Contact</h5>
 
-            <ListGroup className="footer__quick-links">
+            <ListGroup className="footer__quick-links bg_transparent">
               <ListGroupItem className="ps-0 border-0 d-flex align-items-center gap-3">
                 <h6 className="mb-0 d-flex align-items-center gap-2">
                   <span>

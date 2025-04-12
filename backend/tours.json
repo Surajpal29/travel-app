@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Goa Beach Vacation",
+    "description": "Sunny beaches, nightlife, water sports and seafood.",
+    "location": "Goa"
+  },
+  {
+    "title": "Manali Mountain Trek",
+    "description": "Snowy mountains, adventure sports, trekking and camping.",
+    "location": "Manali"
+  },
+  {
+    "title": "Jaipur Heritage Tour",
+    "description": "Palaces, forts, rich culture and historical monuments.",
+    "location": "Jaipur"
+  },
+  {
+    "title": "Kerala Backwaters Tour",
+    "description": "Lush greenery, houseboats, lakes and peaceful natural beauty.",
+    "location": "Kerala"
+  },
+  {
+    "title": "Rajasthan Desert Safari",
+    "description": "Camel rides, desert camps, folk music and dance.",
+    "location": "Jaisalmer"
+  }
+]

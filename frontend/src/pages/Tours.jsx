@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from "react";
 import CommonSection from "../shared/CommonSection";
 import "../styles/tour.css";
@@ -10,67 +9,50 @@ import useFetch from "../hooks/useFetch";
 import { BASE_URL } from "../utils/config";
 import { AuthContext } from "../context/AuthContext";
 import BookingCard from "../shared/BookingCard";
+import axios from "axios";
+import RecommendationCard from "../shared/RecomandationCard";
 
 const Tours = () => {
   const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(0);
-  const [MyTours, setMyTours] = useState(false);
+  const [activeTab, setActiveTab] = useState("alltours"); // New state for tabs
   const [MyToursData, setMyToursData] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
+  const [recommendationInput, setRecommendationInput] = useState("");
+  const [loadingRecommendations, setLoadingRecommendations] = useState(false);
 
   const { user } = useContext(AuthContext);
-  console.log('====================================');
-  console.log("user",user);
-  console.log('====================================');
-  const id = user?._id; // User ki ID ensure karein
+  const id = user?._id;
 
-  // Fetch tours data
-  const { data: tours, loading, error } = useFetch(`${BASE_URL}/tours?page=${page}`);
+  const {
+    data: tours,
+    loading,
+    error,
+  } = useFetch(`${BASE_URL}/tours?page=${page}`);
   const { data: tourCount } = useFetch(`${BASE_URL}/tours/search/getTourCount`);
 
-  // Manually fetch MyTours data
- useEffect(() => {
-    console.log("✅ useEffect triggered! MyTours:", MyTours, "User ID:", id);
-    console.log(localStorage.getItem("token"));
+  useEffect(() => {
+    if (activeTab === "mytours" && id) {
+      const token = localStorage.getItem("token");
 
+      if (!token) return;
 
-   if (MyTours && id) {
-     const token = localStorage.getItem("token");
-
-     if (!token) {
-       console.error("🚨 No token found! User might be logged out.");
-       return;
-     }
-     
-     fetch(`${BASE_URL}/booking/${id}`, {
-       method: "GET",
-       headers: {
-         "Content-Type": "application/json",
-         Authorization: `Bearer ${token}`, // ✅ Add the token here
-       },
-     })
-       .then((res) => {
-         if (res.status === 401) {
-           console.error("❌ Unauthorized! Invalid token or session expired.");
-           throw new Error("You are not authorized!");
-         }
-         return res.json();
-       })
-       .then((data) => {
-         if (data.success) {
-           console.log("✅ Bookings Fetched:", data.data);
-           setMyToursData(data.data);
-         } else {
-           console.error("⚠️ Error fetching MyTours:", data.message);
-         }
-       })
-       .catch((err) => console.error("⚡ Fetch error:", err.message));
-   }
- }, [MyTours, id]);
-
-
-
-
-  console.log("MyToursData:", MyToursData[0]); // Debugging
+      fetch(`${BASE_URL}/booking/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            setMyToursData(data.data);
+          }
+        })
+        .catch((err) => console.error("Fetch error:", err.message));
+    }
+  }, [activeTab, id]);
 
   useEffect(() => {
     const pages = Math.ceil(tourCount / 8);
@@ -78,9 +60,33 @@ const Tours = () => {
     window.scrollTo(0, 0);
   }, [page, tourCount, tours]);
 
-  const handleMytourClick = () => {
-    setMyTours(!MyTours);
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    if (tab !== "recommendations") {
+      setRecommendations([]); // Clear recommendations if switching tabs
+    }
   };
+
+  async function getRecommendations() {
+    if (!recommendationInput.trim()) {
+      alert("Please enter your preference!");
+      return;
+    }
+
+    setLoadingRecommendations(true);
+
+    try {
+      const response = await axios.post(`${BASE_URL}/tours/recommend`, {
+        query: recommendationInput,
+      });
+
+      setRecommendations(response.data.recommendations || []);
+    } catch (err) {
+      console.error("Error fetching recommendations:", err);
+    } finally {
+      setLoadingRecommendations(false);
+    }
+  }
 
   return (
     <>
@@ -98,21 +104,58 @@ const Tours = () => {
         <Container>
           <div className="container-btn">
             <div
-              onClick={handleMytourClick}
-              className={`button ${!MyTours ? "isActive" : ""}`}>
+              onClick={() => handleTabClick("alltours")}
+              className={`button ${
+                activeTab === "alltours" ? "isActive" : ""
+              }`}>
               AllTours
             </div>
             <div
-              onClick={handleMytourClick}
-              className={`button ${MyTours ? "isActive" : ""}`}>
+              onClick={() => handleTabClick("mytours")}
+              className={`button ${activeTab === "mytours" ? "isActive" : ""}`}>
               MyTours
+            </div>
+            <div
+              onClick={() => handleTabClick("recommendations")}
+              className={`button ${
+                activeTab === "recommendations" ? "isActive" : ""
+              }`}>
+              Recommendations
             </div>
           </div>
 
-          {loading && <h4 className="text-center pt-5 ">LOADING..........</h4>}
-          {error && <h4 className="text-center pt-5">{error}</h4>}
+          {activeTab === "recommendations" && (
+            <>
+              <div className="recommendation-section">
+                <input
+                  type="text"
+                  placeholder="Enter your preference..."
+                  value={recommendationInput}
+                  onChange={(e) => setRecommendationInput(e.target.value)}
+                  className="recommendation-input"
+                />
+                <button onClick={getRecommendations} className="button">
+                  Get Recommendations
+                </button>
+              </div>
 
-          {!loading && !error && MyTours && (
+              {loadingRecommendations && (
+                <h4 className="text-center pt-4">Loading Recommendations...</h4>
+              )}
+
+              {!loadingRecommendations && recommendations.length > 0 && (
+                <Row>
+                  {recommendations.map((rec, index) => (
+                    <Col lg="3" md="6" sm="6" className="mb-4" key={index}>
+                      <RecommendationCard recommendation={rec} />
+                    </Col>
+                  ))}
+                </Row>
+              )}
+            </>
+          )}
+
+          {!loading && !error && activeTab === "mytours" && (
             <Row>
               {MyToursData?.length > 0 ? (
                 MyToursData.map((booking) => (
@@ -126,7 +169,7 @@ const Tours = () => {
             </Row>
           )}
 
-          {!loading && !error && !MyTours && (
+          {!loading && !error && activeTab === "alltours" && (
             <Row>
               {tours?.map((tour) => (
                 <Col lg="3" md="6" sm="6" className="mb-4" key={tour._id}>
@@ -156,74 +199,3 @@ const Tours = () => {
 };
 
 export default Tours;
-
-// import React, { useState, useEffect } from 'react'
-// import CommonSection from '../shared/CommonSection'
-// // import tourData from '../assets/data/tours'
-// import '../styles/tour.css'
-// import TourCard from './../shared/TourCard'
-// import SearchBar from './../shared/SearchBar'
-// import Newsletter from './../shared/Newsletter'
-// import { Col, Container, Row } from 'reactstrap'
-// import useFetch from '../hooks/useFetch'
-// import { BASE_URL } from '../utils/config'
-
-
-// const Tours = () => {
-//    const [pageCount, setPageCount] = useState(0)
-//    const [page, setPage] = useState(0)
-
-//    const { data: tours, loading, error } = useFetch(`${BASE_URL}/tours?page=${page}`)
-//    const { data: tourCount } = useFetch(`${BASE_URL}/tours/search/getTourCount`)
-
-//    useEffect(() => {
-//       const pages = Math.ceil(tourCount / 8)
-//       setPageCount(pages)
-//       window.scrollTo(0,0)
-//    }, [page, tourCount, tours])
-
-//    return (
-//       <>
-//          <CommonSection title={"All Tours"} />
-         
-//          <section>
-//             <Container>
-//                <Row>
-//                   <SearchBar />
-//                </Row>
-//             </Container>
-//          </section>
-
-//          <section className='pt-0'>
-//             <Container>
-//                {loading && <h4 className='text-center pt-5 '>LOADING..........</h4>}
-//                {error && <h4 className='text-center pt-5'>{error}</h4>}
-//                {
-//                   !loading && !error &&
-//                   <Row>
-//                      {
-//                         tours?.map(tour => (<Col lg='3' md='6' sm='6' className='mb-4' key={tour._id}> <TourCard tour={tour} /> </Col>))
-//                      }
-
-//                      <Col lg='12'>
-//                         <div className="pagination d-flex align-items-center justify-content-center mt-4 gap-3">
-//                            {[...Array(pageCount).keys()].map(number => (
-//                               <span key={number} onClick={() => setPage(number)}
-//                                  className={page === number ? 'active__page' : ''}
-//                               >
-//                                  {number + 1}
-//                               </span>
-//                            ))}
-//                         </div>
-//                      </Col>
-//                   </Row>
-//                }
-//             </Container>
-//          </section>
-//          <Newsletter />
-//       </>
-//    )
-// }
-
-// export default Tours
-

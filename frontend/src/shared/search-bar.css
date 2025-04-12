@@ -17,6 +17,8 @@
    font-size  : 0.9rem;
    color      : var(--heading-color);
    font-weight: 500;
+   background-color: #e0d7d7;
+   /* border-color: var(--secondary-color); */
 }
 
 .form__group input:focus {

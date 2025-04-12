@@ -46,8 +46,10 @@
    border-radius: 0.5rem;
    color        : var(--heading-color);
    font-size    : 0.7rem;
-   border-bottom: 1px solid rgb(229, 231, 235);
-   border       : none;
+   /* border-bottom: 1px solid rgb(13, 13, 13); */
+   /* border       : none; */
+   border-color: var(--secondary-color);
+   background-color: #e0d7d7;
 }
 
 .booking__form input:focus {
@@ -56,13 +58,15 @@
 
 .booking__info-form {
    padding: 0.2rem;
-   border : 1px solid rgb(229, 231, 235);
+   border : 1px solid transparent;
+   
 }
 
 .booking__bottom li {
    display: flex;
    align-items: center;
    justify-content: space-between;
+   background-color: #e0d7d7;
 }
 
 .booking__bottom li h5,
@@ -70,6 +74,7 @@
    font-size: 0.7rem;
    font-weight: 500;
    color: var(--text-color);
+   background-color: #e0d7d7;
 }
 
 .total h5,
